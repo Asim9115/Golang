@@ -29,4 +29,6 @@ func main() {
 	fmt.Println(dict)
 
 	// set := make(map[string]struct{})
+	var temp string
+	fmt.Println(temp)
 }

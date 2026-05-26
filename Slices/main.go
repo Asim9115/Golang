@@ -22,4 +22,10 @@ func main() {
 	fmt.Println(highScores)
 	sort.Ints(highScores)
 	fmt.Println(highScores)
+	//removing value from slice based on index
+	var courses = []string{"Django", "Golang", "Python", "Cprogramming"}
+	fmt.Println(courses)
+	index  :=  2
+	courses = append(courses[:index],courses[index+1:]... )
+	fmt.Println(courses)
 }

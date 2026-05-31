@@ -9,7 +9,28 @@ import (
 
 func main() {
 	fmt.Println("Welcome to making Web Requests")
-	PerfromGetRequest()
+	//PerfromGetRequest()
+	PerformPostRequest()
+}
+
+func PerformPostRequest() {
+	const myurl = "http://localhost:8000/post"
+	requestBody := strings.NewReader(`
+	{
+		"cousename" : "Go with GoLang",
+		"price" : 12,
+		"platform" : "lco.in"
+	}
+	`)
+
+	response, err := http.Post(myurl, "application/json", requestBody)
+	if err != nil {
+		panic(err)
+	}
+
+	content , err := ioutil.ReadAll(response.Body)
+	fmt.Println(string(content))
+	fmt.Println(response.StatusCode)
 }
 
 func PerfromGetRequest() {

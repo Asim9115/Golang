@@ -5,12 +5,34 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"net/url"
+	
 )
 
 func main() {
 	fmt.Println("Welcome to making Web Requests")
 	//PerfromGetRequest()
-	PerformPostRequest()
+	// PerformPostRequest()
+	SendFormData()
+}
+
+func SendFormData() {
+	const myurl = "http://localhost:8000/postform"
+
+	//formdata
+
+	data := url.Values{}
+	data.Add("Name","ASim")
+	data.Add("Age", "20")
+	data.Add("Email","asim@asim.com")
+
+	response, err := http.PostForm(myurl, data)
+	if err != nil {
+		panic(err)
+	}
+	content, err := ioutil.ReadAll(response.Body)
+	fmt.Println(string(content))
+	defer response.Body.Close()
 }
 
 func PerformPostRequest() {
@@ -31,6 +53,8 @@ func PerformPostRequest() {
 	content , err := ioutil.ReadAll(response.Body)
 	fmt.Println(string(content))
 	fmt.Println(response.StatusCode)
+		defer response.Body.Close()
+
 }
 
 func PerfromGetRequest() {

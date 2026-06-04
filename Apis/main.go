@@ -72,7 +72,7 @@ func getOneCourse(w http.ResponseWriter,r *http.Request) {
 
 func createOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Creating Course")
-	w.Header().Set("content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "applcation/json")
 	 //Empty Body
 	 if r.Body == nil {
 		json.NewEncoder(w).Encode("Send the Data")
@@ -97,7 +97,7 @@ func createOneCourse(w http.ResponseWriter, r *http.Request) {
 
 func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Updating Course")
-	w.Header().Set("content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "applcation/json")
 	//grab id from request
 
 	params := mux.Vars(r)
@@ -117,3 +117,19 @@ func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 
 	//TODO
 }
+
+func deleteOneCourse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Deleting A Course")
+	w.Header().Set("Content-Type", "applcation/json")
+	params := mux.Vars(r)
+	for index, course := range courses {
+		if course.CourseId == params["id"] {
+			courses = append(courses[:index], courses[index+1:]... )
+			json.NewEncoder(w).Encode("Course Deleted Successfully")
+			return
+		}
+	}
+	json.NewEncoder(w).Encode("Course not found")
+	return
+}
+

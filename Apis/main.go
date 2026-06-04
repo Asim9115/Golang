@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -36,6 +37,68 @@ func (c *Course) IsEmpty() bool {
 }
 
 func main() {
+	fmt.Println("API")
+	r := mux.NewRouter()
+	//seeding
+
+courses = append(courses,
+	Course{
+		CourseId:    "1",
+		CourseName:  "Golang",
+		CoursePrice: 999,
+		Author: &Author{
+			Fullname: "Asim Khan",
+			Website:  "asimkhan.me",
+		},
+	},
+	Course{
+		CourseId:    "2",
+		CourseName:  "Python",
+		CoursePrice: 799,
+		Author: &Author{
+			Fullname: "John Doe",
+			Website:  "johndoe.dev",
+		},
+	},
+	Course{
+		CourseId:    "3",
+		CourseName:  "JavaScript",
+		CoursePrice: 899,
+		Author: &Author{
+			Fullname: "Jane Smith",
+			Website:  "janesmith.io",
+		},
+	},
+	Course{
+		CourseId:    "4",
+		CourseName:  "Java",
+		CoursePrice: 1099,
+		Author: &Author{
+			Fullname: "Rahul Sharma",
+			Website:  "rahulcodes.com",
+		},
+	},
+	Course{
+		CourseId:    "5",
+		CourseName:  "Rust",
+		CoursePrice: 1299,
+		Author: &Author{
+			Fullname: "Alice Brown",
+			Website:  "alicebrown.dev",
+		},
+	},
+)
+
+//Routing
+r.HandleFunc("/",serveHome).Methods("GET")
+r.HandleFunc("/courses", getAllCourses).Methods("GET")
+r.HandleFunc("/course/{id}", getOneCourse).Methods("GET")
+r.HandleFunc("/course",createOneCourse).Methods("POST")
+r.HandleFunc("/course/{id}", updateOneCourse).Methods("PUT")
+r.HandleFunc("/course/{id}", deleteOneCourse).Methods("DELETE")
+
+//listen to a port
+	log.Fatal(http.ListenAndServe(":4000",r))
 	
 }
 
@@ -49,13 +112,13 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 
 func getAllCourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get all Courses")
-	w.Header().Set("Content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(courses)
 }
 
 func getOneCourse(w http.ResponseWriter,r *http.Request) {
 	 fmt.Println("Get One course")
-	w.Header().Set("Content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "application/json")
 	 
 	//Grab Id from Request
 	params := mux.Vars(r) 
@@ -72,7 +135,7 @@ func getOneCourse(w http.ResponseWriter,r *http.Request) {
 
 func createOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Creating Course")
-	w.Header().Set("Content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "application/json")
 	 //Empty Body
 	 if r.Body == nil {
 		json.NewEncoder(w).Encode("Send the Data")
@@ -97,7 +160,7 @@ func createOneCourse(w http.ResponseWriter, r *http.Request) {
 
 func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Updating Course")
-	w.Header().Set("Content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "application/json")
 	//grab id from request
 
 	params := mux.Vars(r)
@@ -120,7 +183,7 @@ func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 
 func deleteOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Deleting A Course")
-	w.Header().Set("Content-Type", "applcation/json")
+	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for index, course := range courses {
 		if course.CourseId == params["id"] {

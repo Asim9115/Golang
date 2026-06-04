@@ -70,7 +70,7 @@ func getOneCourse(w http.ResponseWriter,r *http.Request) {
 	return
 }
 
-func createOneCourse(w http.ResponseWriter, r *http.Response) {
+func createOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Creating Course")
 	w.Header().Set("content-Type", "applcation/json")
 	 //Empty Body
@@ -95,7 +95,7 @@ func createOneCourse(w http.ResponseWriter, r *http.Response) {
 	 return
 }
 
-func updateOneCourse(w http.ResponseWriter, r *http.Response) {
+func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Updating Course")
 	w.Header().Set("content-Type", "applcation/json")
 	//grab id from request

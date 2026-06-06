@@ -3,6 +3,7 @@ package repository
 import (
 		"github.com/asim9115/GoLang/config"
 	"github.com/asim9115/GoLang/models"
+	"errors"
 
 )
 
@@ -28,3 +29,17 @@ func UpdateUser(user *models.User, id string) (error) {
 	return config.DB.Model(&models.User{}).Where("id = ?", id).Updates(user).Error
 }
 
+
+func DeleteUser(id string) (error) {
+	result := config.DB.Delete(&models.User{}, id)
+		if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return errors.New("user not found")
+	}
+
+	return nil
+
+}

@@ -1,5 +1,66 @@
-package main
+// package main
 
+// //--------------------------------SOCKET-----------------------
+// import (
+// 	"log"
+// 	"net/http"
+	
+// 	"time"
+// )
+
+// var myChannel = make(chan string, 100)
+
+// func main() {
+
+// 	http.HandleFunc("/socket", HandleSOCKET)
+
+// 	go logs(myChannel)
+
+// 	log.Println("server listening on port :8080")
+// 	http.ListenAndServe(":8080", nil)
+// }
+
+// func HandleSOCKET(w http.ResponseWriter, r *http.Request) {
+
+// }
+
+
+
+// func logs(myChannel chan string) {
+
+// 	myChannel <- "step1"
+// 	time.Sleep(2 * time.Second)
+
+// 	myChannel <- "step2"
+// 	time.Sleep(2 * time.Second)
+
+// 	myChannel <- "step3"
+// 	time.Sleep(2 * time.Second)
+
+// 	myChannel <- "done"
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------SSE----------------------------
+package main
 import (
 	"fmt"
 	"log"
